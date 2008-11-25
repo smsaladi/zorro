@@ -40,8 +40,13 @@ int alen;
 double TOT_DIST;
 int sample;
 double **dists;
+int ignoreGaps;
+int WEIGHTING;
+int ADD;
+int verbose;
 int uguide; // User provided guide tree
 char guidetree[200];
+char treeprog[400];
 
 /*
 ** A handy error function to prints  an error message and die
@@ -93,7 +98,8 @@ int readSeq(char *inFile){
     else if(len != alen){
       error("Wrong alignment\n");
     }
-    //fprintf(stderr,">seq%d\n%s\n",Nseq,seq);
+    if(verbose)
+      fprintf(stderr,">seq%d\n%s\n",Nseq,seq);
     align[Nseq] = seq;
     Nseq++;
   }
@@ -102,11 +108,13 @@ int readSeq(char *inFile){
   }
   fclose(fp1);
   fclose(fp2);
-  fprintf(stderr,"%d sequences, Length %d\n",Nseq,alen);
+  if(verbose)
+    fprintf(stderr,"%d sequences, Length %d\n",Nseq,alen);
   
   for(i=0;i<Nseq;i++){
     sequence[i] = removeGaps(align[i],alen,&lens[i]);
-    //fprintf(stderr,"%d\n",lens[i]);
+    if(verbose)
+      fprintf(stderr,"%d\n",lens[i]);
   }
 
 #ifdef NOWEIGHTING
@@ -141,7 +149,8 @@ void protdist(char *inFile,double **mat){
 
   sprintf(command,"/home/souravc/masking/calc_dist.pl %s %d",inFile,Nseq);
   system(command);
-  fprintf(stderr,"Reading Distances\n");
+  if(verbose)
+    fprintf(stderr,"Reading Distances\n");
   sprintf(distfile,"%s.trim.mat",inFile);
   if((fp = fopen(distfile,"r")) == NULL){
     error("Cannot open distance matrix %s\n",distfile);
@@ -200,7 +209,8 @@ char  *readNextSeq(char *inFile,int *LEN,FILE *fp1,FILE *fp2,int *pflag,char **n
     
     if(len == 0){
       fgets(line,MAX_LINE_LEN,fp2);
-      fprintf(stderr,"Zero length sequence %s",line);
+      if(verbose)
+	fprintf(stderr,"Zero length sequence %s",line);
       //getSeqLen(fp2);
     }
     

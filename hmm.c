@@ -154,7 +154,8 @@ void calc_posterior(int len){
   }
   TOT_DIST = 0.0;
   for(i=0;i<Nseq;i++){
-    fprintf(stderr,"Sequence %d...\n",i);
+    if(verbose)
+      fprintf(stderr,"Sequence %d...\n",i);
     for(j=i+1;j<Nseq;j++){
       if(do_sample == 0){
 	if(MATRICES)
@@ -174,18 +175,28 @@ void calc_posterior(int len){
   //addPosterior(0,Nseq-1);
 
   for(i=0;i<alen;i++){
-#ifdef ADD
-#ifndef WEIGHT
-    posterior[i] /= ((Nseq*(Nseq-1))/2);
-    //posterior[i] /= ((double)(sample[i]));
-#else
-    posterior[i] /= TOT_DIST;
-#endif
-    printf("%f\n",10*posterior[i]);
-#else
-    posterior[i] /= ((double)(sample[i]));
-    printf("%d\n",(int)(10*exp(Nseq*posterior[i])));
-#endif
+    if(ADD != 0){
+      if(WEIGHTING == 0){
+	if(ignoreGaps == 0){
+	  posterior[i] /= ((Nseq*(Nseq-1))/2);
+	}
+	else{
+	  posterior[i] /= ((double)(sample[i]));
+	}
+      }else{
+	if(ignoreGaps == 0){
+	  posterior[i] /= TOT_DIST;
+	}
+	else{
+	  posterior[i] /= ((double)(sample[i]));
+	}
+      }
+      printf("%f\n",10*posterior[i]);
+    }
+    else{
+      posterior[i] /= ((double)(sample[i]));
+      printf("%d\n",(int)(10*exp(Nseq*posterior[i])));
+    }
   }
 
 }
@@ -224,45 +235,50 @@ void addPosterior(int X,int Y){
   
   
   for(i=0;i<alen;i++){
-    sample[i]++;
+    if(WEIGHTING == 0){
+      sample[i]++;
+    }else{
+      sample[i] += pairWeights[X][Y];
+    }
     switch(states[i]){
     case -1:
       posterior[i] += 0.0;
-      sample[i]--;
+      if(WEIGHTING == 0){
+	sample[i]--;
+      }else{
+	sample[i] -= pairWeights[X][Y]; 
+      }
       break;
     case 0:
-#ifdef ADD
-      f = exp(Mfmatrix[Xpos[i]][Ypos[i]]+Mbmatrix[Xpos[i]][Ypos[i]]-pxy);
-#else
-      f = Mfmatrix[Xpos[i]][Ypos[i]]+Mbmatrix[Xpos[i]][Ypos[i]]-pxy;
-#endif
+      if(ADD != 0){
+	f = exp(Mfmatrix[Xpos[i]][Ypos[i]]+Mbmatrix[Xpos[i]][Ypos[i]]-pxy);
+      }else{
+	f = Mfmatrix[Xpos[i]][Ypos[i]]+Mbmatrix[Xpos[i]][Ypos[i]]-pxy;
+      }
       //printf("%d %d : %f %f %f\n",Xpos[i],Ypos[i],Mfmatrix[Xpos[i]][Ypos[i]],Mbmatrix[Xpos[i]][Ypos[i]],Mfmatrix[Xpos[i]][Ypos[i]]+Mbmatrix[Xpos[i]][Ypos[i]]-pxy);
-#ifdef WEIGHT
-      f *= pairWeights[X][Y];
-#endif
+      if(WEIGHTING != 0)
+	f *= pairWeights[X][Y];
       posterior[i] += f;
       
       break;
     case 1:
-#ifdef ADD
-      f = exp(Xfmatrix[Xpos[i]][Ypos[i]]+Xbmatrix[Xpos[i]][Ypos[i]]-pxy);
-#else
-      f = Xfmatrix[Xpos[i]][Ypos[i]]+Xbmatrix[Xpos[i]][Ypos[i]]-pxy;
-#endif
-#ifdef WEIGHT
-      f *= pairWeights[X][Y];
-#endif
+      if(ADD != 0){
+	f = exp(Xfmatrix[Xpos[i]][Ypos[i]]+Xbmatrix[Xpos[i]][Ypos[i]]-pxy);
+      }else{
+	f = Xfmatrix[Xpos[i]][Ypos[i]]+Xbmatrix[Xpos[i]][Ypos[i]]-pxy;
+      }
+      if(WEIGHTING != 0)
+	f *= pairWeights[X][Y];
       posterior[i] += f;
       break;
     case 2:
-#ifdef ADD
-      f = exp(Yfmatrix[Xpos[i]][Ypos[i]]+Ybmatrix[Xpos[i]][Ypos[i]]-pxy);
-#else
-      f = Yfmatrix[Xpos[i]][Ypos[i]]+Ybmatrix[Xpos[i]][Ypos[i]]-pxy;
-#endif
-#ifdef WEIGHT
-      f *= pairWeights[X][Y];
-#endif
+      if(ADD != 0){
+	f = exp(Yfmatrix[Xpos[i]][Ypos[i]]+Ybmatrix[Xpos[i]][Ypos[i]]-pxy);
+      }else{
+	f = Yfmatrix[Xpos[i]][Ypos[i]]+Ybmatrix[Xpos[i]][Ypos[i]]-pxy;
+      }
+      if(WEIGHTING != 0)
+	f *= pairWeights[X][Y];
       posterior[i] += f;
       break;
     default:
