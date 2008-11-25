@@ -23,4 +23,9 @@ EXTERN double TOT_DIST;
 EXTERN double **dists;
 EXTERN int uguide; // User provided guide tree
 EXTERN char guidetree[200];
+EXTERN char treeprog[400];
+EXTERN int ignoreGaps;
+EXTERN int WEIGHTING;
+EXTERN int ADD;
+EXTERN int verbose;
 #define MIN(X,Y) ((X) < (Y) ? : (X) : (Y))

@@ -1,10 +1,11 @@
 
-
-#define ADD
-#define LONG
+// Separate state to allow long gaps
+#define LONG 
+// Use initial probabilities of various states
 #define ENDTRANS
-#define NCSTATE
-#define WEIGHT
+// Separate  states for N and C terminus of proteins 
+#define NCSTATE 
+
 
 
 

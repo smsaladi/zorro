@@ -66,9 +66,11 @@ void initWeighting(char *inFile){
   }
   if(uguide == 0){
     sprintf(tfile,"%s.zorro.tre",inFile);
-    sprintf(command,"FastTree %s > %s 2>/dev/null",inFile,tfile);
+    sprintf(command,"%s %s > %s 2>/dev/null",treeprog,inFile,tfile);
     system(command);
     qtree = readPhyloTree(tfile);
+    sprintf(command,"rm -rf %s",tfile);
+    system(command);
   }
   else{
     qtree = readPhyloTree(guidetree);
@@ -77,7 +79,7 @@ void initWeighting(char *inFile){
   
   
   if(qtree == NULL) {
-    error("Cannot create tree from alignment \n Check FastTree installation\n");
+    error("Cannot create tree from alignment \n Check %s installation\n",treeprog);
   }
   
   makeBinary(qtree);
@@ -90,7 +92,7 @@ void initWeighting(char *inFile){
   leaves = getAllLeaves(qtree,&num);
   
   if(num != Nseq){
-    error("Tree inconsistent with alignment\n Check FastTree installation\n");
+    error("Tree inconsistent with alignment\n Check %s installation\n",treeprog);
   }
   // vlist in postorder
   vlist = getAllNodes(qtree,&Nodes);
@@ -230,17 +232,20 @@ void initPairWeights(int dummy){
 
   for(i=0;i<Nseq;i++){
     if(!do_sample){
-      fprintf(stderr,"%s: ",leaves[i]->label);
+      if(verbose)
+	fprintf(stderr,"%s: ",leaves[i]->label);
     }
     for(j=0;j<Nseq;j++){
       pairWeights[i][j] /= sum;
       if(!do_sample){
-	fprintf(stderr,"%f ",pairWeights[i][j]);
+	if(verbose)
+	  fprintf(stderr,"%f ",pairWeights[i][j]);
       }
     }
     if(!do_sample){
-      fprintf(stderr,"\n");
-  }
+      if(verbose)
+	fprintf(stderr,"\n");
+    }
 
 }
 
@@ -370,12 +375,15 @@ void initPairWeights(int dummy){
   sum = sum / 2;
 
   for(i=0;i<Nseq;i++){
-    fprintf(stderr,"%s: ",leaves[i]->label);
+    if(verbose)
+      fprintf(stderr,"%s: ",leaves[i]->label);
     for(j=0;j<Nseq;j++){
       pairWeights[i][j] /= sum;
-      fprintf(stderr,"%f ",pairWeights[i][j]);
+      if(verbose)
+	fprintf(stderr,"%f ",pairWeights[i][j]);
     }
-    fprintf(stderr,"\n");
+    if(verbose)
+      fprintf(stderr,"\n");
   }
 
 
@@ -479,18 +487,25 @@ void initPairWeights(int dummy){
   sum = sum / 2;
 
   for(i=0;i<Nseq;i++){
-    if(!do_sample)
-      fprintf(stderr,"%s: ",leaves[i]->label);
+    if(!do_sample){
+      if(verbose)
+	fprintf(stderr,"%s: ",leaves[i]->label);
+    }
     for(j=0;j<Nseq;j++){
       pairWeights[i][j] /= sum;
-      if(!do_sample)
-	fprintf(stderr,"%f ",pairWeights[i][j]);
+      if(!do_sample){
+	if(verbose)
+	  fprintf(stderr,"%f ",pairWeights[i][j]);
+      }
+      
+      if(!do_sample){
+	if(verbose)
+	  fprintf(stderr,"\n");
+      }
     }
-    if(!do_sample)
-      fprintf(stderr,"\n");
+    
+    
   }
-
-
 }
 
 void trace(int base,double l,double WV,PhyloTree *node,PhyloTree *prev){
@@ -576,15 +591,22 @@ void initPairWeights(int dummy){
   sum = sum / 2;
 
   for(i=0;i<Nseq;i++){
-    if(!do_sample)
-      fprintf(stderr,"%s: ",leaves[i]->label);
+    if(!do_sample){
+      if(verbose)
+	fprintf(stderr,"%s: ",leaves[i]->label);
+    }
     for(j=0;j<Nseq;j++){
-      if(!do_sample)
-	fprintf(stderr,"%f ",pairWeights[i][j]);
+      if(!do_sample){
+	if(verbose)
+	  fprintf(stderr,"%f ",pairWeights[i][j]);
+      }
+    
       pairWeights[i][j] /= sum;
     }
-    if(!do_sample)
-      fprintf(stderr,"\n");
+    if(!do_sample){
+      if(verbose)
+	fprintf(stderr,"\n");
+    }
   }
 
 
