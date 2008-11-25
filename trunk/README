@@ -24,7 +24,7 @@ http://baboon.math.berkeley.edu/mavid/multifasta.html
 
 An example input file is provided in : Example/family_15833_5_prank2_2_cDNAid
 
-Output : The output is a plain text file with confidence scores of each column in each line. The confidence score, which is a measure of the reliability of a column according to a pair-HMM model is a floating point between 0 and 10. The 
+Output : The output is a plain text file with confidence scores of each column in each line. The confidence score, which is a measure of the reliability of a column according to a pair-HMM model is a floating point between 0 and 10. 
 
 An example output fle is provided in : Example/family_15833_5_prank2_2_cDNAid.mask
 
