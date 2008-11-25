@@ -41,7 +41,7 @@ int main(int argc,char **argv){
 
   do_sample = 0;
   uguide = 0;
-  Nsamples = 4*Nseq;
+  Nsamples = 10*Nseq;
   strcpy(treeprog,"FastTree");
   ignoreGaps = 0;
   WEIGHTING = 1;
@@ -137,7 +137,7 @@ int main(int argc,char **argv){
   readSeq(argv[argc-1]);
   initWeighting(argv[argc-1]);
   if(do_sample){
-    if(Nsamples < 4*Nseq){
+    if(Nsamples < 10*Nseq){
       Nsamples = 10*Nseq; 
     }
     initSampling(Nsamples);
