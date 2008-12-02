@@ -4,7 +4,7 @@ use warnings;
 use strict;
 
 if(@ARGV != 2){
-    die "Format:calc_dist.pl file Nseq\n"
+    die "Format:zorro_dist.pl file Nseq\n"
 }
 
 
