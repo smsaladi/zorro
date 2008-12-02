@@ -6,3 +6,5 @@ hmm.h  matrices.h  sample.h  tree.h  trim.h  utils.h  weights.h
 
 zorro_LDADD = -lm
 
+dist_bin_SCRIPTS = zorro_dist.pl
+
