@@ -4,19 +4,18 @@ Authors: Martin Wu, Sourav Chatterji and Jonathan Eisen
 
 1. Prerequisites 
 
-ZORRO needs the C compiler gcc (preferably version 4.1.2 or later). In addition, it needs FastTree which can be downloaded from:
+ZORRO needs the C compiler gcc (preferably version 4.1.2 or later). 
+It also requires perl.
 
-http://www.microbesonline.org/fasttree/
+2. Installation on Mac OS X and Linux
 
-2. Installation
+On the command line, type "./configure --prefix=$HOME" and then "make install". The binary "zorro" will be produced and installed to your home directory. 
 
-On the command line, type "make clean" aand then "make". The binary "probmask" should be produced. 
-
-Optional : To easily access ZORRO from the command line, add the directory containing ZORRO to your environment variable $PATH. 
+Optional : To easily access ZORRO from the command line, add the directory containing ZORRO ($HOME/bin) to your environment variable $PATH. 
 
 3. Input/Output Formats
 
-ZORRO is run as: "probmask [options] inputfile > outputfile"
+ZORRO is run as: "zorro [options] inputfile > outputfile"
 
 Input : Here the input file is multiple sequence alignment in multi fasta format. More details about this format can be found at:
 
@@ -45,3 +44,8 @@ ZORRO has several options which are listed below and can also be accessed by typ
 Martin Wu (martinwu@ucdavis.edu)
 Sourav Chatterji (schatterji@ucdavis.edu)
 Jonathan Eisen (jaeisen@ucdavis.edu)
+
+6. Other credits
+ZORRO makes use of FastTree, a GPL program available from:
+http://www.microbesonline.org/fasttree/
+

@@ -1,4 +1,4 @@
-bin_PROGRAMS = zorro
+bin_PROGRAMS = zorro FastTree
 
 zorro_SOURCES = \
 hmm.c  matrices.c  sample.c  tree.c  trim.c  utils.c  weights.c \
@@ -8,3 +8,5 @@ zorro_LDADD = -lm
 
 dist_bin_SCRIPTS = zorro_dist.pl
 
+FastTree_SOURCES = FastTree.c
+FastTree_LDADD = -lm

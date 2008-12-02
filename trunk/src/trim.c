@@ -154,7 +154,7 @@ int main(int argc,char **argv){
 }
 
 void printHelp(int dummy){
-  fprintf(stdout,"Usage: probmask [options] filename\n\n");
+  fprintf(stdout,"Usage: zorro [options] filename > outputfile\n\n");
       fprintf(stdout,"ZORRO Options \n\n");
       fprintf(stdout,"-sample          : Sampling pairs to calculate alignment reliabilty [Off By Default]\n");
       fprintf(stdout,"-nosample        : No Sampling i.e. using every pair to calculate alignment reliabilty [On By Default]\n");
