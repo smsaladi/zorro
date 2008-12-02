@@ -320,13 +320,12 @@ void makeBinary(PhyloTree *node){
 int countPhyloTreeNodes( PhyloTree *tree )
 {
   int i;
+  int num = 0;
   if( !tree )
     return 0;
 
   if( tree->numChild == 0 )
     return 1;
-
-  int num = 0;
   
   for( i = 0; i < tree->numChild; i++ )
     num += countPhyloTreeNodes( tree->child[i] );
