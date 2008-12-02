@@ -1,1 +1,3 @@
 SUBDIRS=src
+EXTRA_DIST=zorro.sln zorro.vcproj 
+dist_pkgdata_DATA=README Example/family_15833_5_prank2_2_cDNAid Example/family_15833_5_prank2_2_cDNAid.mask
