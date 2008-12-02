@@ -23,6 +23,10 @@
 
 void printHelp(int dummy);
 
+#ifdef WIN32
+int strcasecmp(const char *s1, const char *s2){ return _strcmpi(s1, s2); }
+#endif
+
 int main(int argc,char **argv){ 
   int i,t;
   if(argc < 2){
@@ -30,7 +34,6 @@ int main(int argc,char **argv){
     printHelp(0);
     exit(EXIT_FAILURE);
   }
-
 
   if(0 == strcasecmp(argv[1],"-help") || 0 == strcasecmp(argv[1],"-h")){
       printHelp(0);
