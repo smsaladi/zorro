@@ -147,7 +147,7 @@ void protdist(char *inFile,double **mat){
   
   TOT_DIST = 0.0;
 
-  sprintf(command,"/home/souravc/masking/calc_dist.pl %s %d",inFile,Nseq);
+  sprintf(command,"zorro_dist.pl %s %d",inFile,Nseq);
   errcode=system(command);
   if(verbose)
     fprintf(stderr,"Reading Distances\n");
