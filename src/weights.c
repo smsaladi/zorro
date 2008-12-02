@@ -37,7 +37,7 @@ void calcPDV(PhyloTree *node);
 void initWeighting(char *inFile){
   
   char tfile[100];
-  int num;
+  int num, errcode;
   double f;
   
   if(Nseq == 1){
@@ -67,10 +67,10 @@ void initWeighting(char *inFile){
   if(uguide == 0){
     sprintf(tfile,"%s.zorro.tre",inFile);
     sprintf(command,"%s %s > %s 2>/dev/null",treeprog,inFile,tfile);
-    system(command);
+    errcode=system(command);
     qtree = readPhyloTree(tfile);
     sprintf(command,"rm -rf %s",tfile);
-    system(command);
+    errcode=system(command);
   }
   else{
     qtree = readPhyloTree(guidetree);

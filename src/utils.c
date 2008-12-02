@@ -143,12 +143,12 @@ void protdist(char *inFile,double **mat){
   char command[200];
   char distfile[200];
   FILE *fp;
-  int i,j,off1,off2;
+  int i,j,off1,off2,errcode;
   
   TOT_DIST = 0.0;
 
   sprintf(command,"/home/souravc/masking/calc_dist.pl %s %d",inFile,Nseq);
-  system(command);
+  errcode=system(command);
   if(verbose)
     fprintf(stderr,"Reading Distances\n");
   sprintf(distfile,"%s.trim.mat",inFile);
@@ -200,7 +200,7 @@ char *removeGaps(char *seq,int len,int *nlen){
 
 char  *readNextSeq(char *inFile,int *LEN,FILE *fp1,FILE *fp2,int *pflag,char **name){
 
-    char *seq;
+    char *seq, *none;
     int i,len,counter;
     char c;
     
@@ -208,7 +208,7 @@ char  *readNextSeq(char *inFile,int *LEN,FILE *fp1,FILE *fp2,int *pflag,char **n
     *LEN = len;
     
     if(len == 0){
-      fgets(line,MAX_LINE_LEN,fp2);
+      none=fgets(line,MAX_LINE_LEN,fp2);
       if(verbose)
 	fprintf(stderr,"Zero length sequence %s",line);
       //getSeqLen(fp2);
