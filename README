@@ -4,32 +4,35 @@ Authors: Martin Wu, Sourav Chatterji and Jonathan Eisen
 
 1. Prerequisites 
 
-ZORRO needs the C compiler gcc (preferably version 4.1.2 or later). 
-It also requires perl.
+ZORRO needs the C compiler gcc (preferably version 4.1.2 or later) and perl.
 
-2. Installation on Mac OS X and Linux
+2. Installation
+Download the tarball from http://probmask.svn.sourceforge.net.
 
-On the command line, type "./configure --prefix=$HOME" and then "make install". The binary "zorro" will be produced and installed to your home directory. 
+Then, on the command line, type 
+	tar -zxvf probmask.tar.gz
+	cd probmask/trunk/
+	./autogen.sh
+	./configure --prefix=$HOME
+	make install
+	
+The binary "zorro" will be produced and installed to $HOME/bin directory. 
 
 Optional : To easily access ZORRO from the command line, add the directory containing ZORRO ($HOME/bin) to your environment variable $PATH. 
 
-3. Input/Output Formats
+3. Running ZORRO
 
 ZORRO is run as: "zorro [options] inputfile > outputfile"
 
-Input : Here the input file is multiple sequence alignment in multi fasta format. More details about this format can be found at:
-
-http://baboon.math.berkeley.edu/mavid/multifasta.html
+Input : Here the input file is multiple sequence alignment in multi fasta format. More details about this format can be found at http://en.wikipedia.org/wiki/FASTA_format
 
 An example input file is provided in : Example/family_15833_5_prank2_2_cDNAid
 
-Output : The output is a plain text file with confidence scores of each column in each line. The confidence score, which is a measure of the reliability of a column according to a pair-HMM model is a floating point between 0 and 10. 
+Output : The output is a plain text file with confidence scores of one column per line, in order from column 1, 2, 3 ... etc. The confidence score is a measure of the reliability of a column according to a pair-HMM model.  It has a value between 0 and 10. 
 
 An example output fle is provided in : Example/family_15833_5_prank2_2_cDNAid.mask
 
-4. Options
-
-ZORRO has several options which are listed below and can also be accessed by typing "probmask -h".
+Options: ZORRO has several options which are listed below and can also be accessed by typing "probmask -h".
 
 -sample          : Sampling pairs to calculate alignment reliabilty [Off By Default]
 -nosample        : No Sampling i.e. using every pair to calculate alignment reliabilty [On By Default]
@@ -39,13 +42,16 @@ ZORRO has several options which are listed below and can also be accessed by typ
 -treeprog PROGRAM: Tells ZORRO to use PROGRAM instead of the default FastTree to create guide tree [FastTree By Default]
 -guide treefile  : User provided guide tree
 
+4. Usage example
+
+	$HOME/bin/zorro -sample ./Example/family_15833_5_prank2_2_cDNAid > family_15833_5_prank2_2_cDNAid.mask
+
 5. Contact
 
-Martin Wu (martinwu@ucdavis.edu)
-Sourav Chatterji (schatterji@ucdavis.edu)
+Martin Wu (mw4yv@virginia.edu)
+Sourav Chatterji (souravc@gmail.com)
 Jonathan Eisen (jaeisen@ucdavis.edu)
 
 6. Other credits
 ZORRO makes use of FastTree, a GPL program available from:
 http://www.microbesonline.org/fasttree/
-
